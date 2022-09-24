@@ -8,9 +8,9 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
-import top.misec.webhooks.entity.CallBackRecord;
-import top.misec.webhooks.mapper.CallBackRecordMapper;
-import top.misec.webhooks.service.ICallBackRecordService;
+import top.misec.webhooks.entity.WebHooksRecord;
+import top.misec.webhooks.mapper.WebHooksRecordMapper;
+import top.misec.webhooks.service.IWebHooksRecordService;
 import top.misec.webhooks.utils.ServletRequestUtils;
 
 /**
@@ -23,30 +23,32 @@ import top.misec.webhooks.utils.ServletRequestUtils;
  */
 @Service
 @Slf4j
-public class CallBackRecordServiceImpl extends ServiceImpl<CallBackRecordMapper, CallBackRecord> implements ICallBackRecordService {
+public class WebHooksRecordServiceImpl extends ServiceImpl<WebHooksRecordMapper, WebHooksRecord> implements IWebHooksRecordService {
 
     /**
-     * @param uuid               uuid
+     * @param eventId            eventId
      * @param httpServletRequest httpServletRequest
      * @param requestBody        requestBody
      */
     @Override
-    public void recordWebhooks(String uuid, HttpServletRequest httpServletRequest, String requestBody) {
+    public void recordWebhooks(String eventId, HttpServletRequest httpServletRequest, String requestBody) {
 
         String header = JSON.toJSONString(ServletRequestUtils.getHeaders(httpServletRequest));
 
-        CallBackRecord callBackRecord = new CallBackRecord();
+        log.info("uuid:{},header:{},body:{}", eventId, header, requestBody);
 
-        callBackRecord.setCallBackUuid(uuid);
-        callBackRecord.setCallBackHeader(header);
-        callBackRecord.setCallBackBody(requestBody);
+        WebHooksRecord webHookRecord = new WebHooksRecord();
+
+        webHookRecord.setEventId(eventId);
+        webHookRecord.setHeader(header);
+        webHookRecord.setBody(requestBody);
+
+        log.info("webhooks回调记录:{}", webHookRecord);
 
         log.info(httpServletRequest.getQueryString());
         log.info(JSON.toJSONString(httpServletRequest.getParameterMap()));
-        log.info(com.alibaba.fastjson.JSON.toJSONString(httpServletRequest.getParameterMap()));
 
-
-        this.save(callBackRecord);
+        this.save(webHookRecord);
 
     }
 }

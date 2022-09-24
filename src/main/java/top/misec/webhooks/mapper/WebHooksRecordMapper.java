@@ -2,7 +2,7 @@ package top.misec.webhooks.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import top.misec.webhooks.entity.CallBackRecord;
+import top.misec.webhooks.entity.WebHooksRecord;
 
 /**
  * <p>
@@ -12,6 +12,6 @@ import top.misec.webhooks.entity.CallBackRecord;
  * @author Moshi
  * @since 2022-09-23
  */
-public interface CallBackRecordMapper extends BaseMapper<CallBackRecord> {
+public interface WebHooksRecordMapper extends BaseMapper<WebHooksRecord> {
 
 }

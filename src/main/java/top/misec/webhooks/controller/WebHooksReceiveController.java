@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import top.misec.webhooks.service.ICallBackRecordService;
+import top.misec.webhooks.service.IWebHooksRecordService;
 
 /**
  * <p>
@@ -20,14 +20,14 @@ import top.misec.webhooks.service.ICallBackRecordService;
  * @author moshi
  * @since 2022-09-23
  */
-@RequestMapping("/WebHooks")
+@RequestMapping("/webHooks")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 public class WebHooksReceiveController {
 
 
-    private final ICallBackRecordService callBackRecordService;
+    private final IWebHooksRecordService webHooksRecordService;
 
 
     /**
@@ -37,12 +37,12 @@ public class WebHooksReceiveController {
      * @param requestBody        body
      * @return String String
      */
-    @RequestMapping(value = "/{uuid}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String postWebhooksReceive(@PathVariable("uuid") String uuid,
+    @RequestMapping(value = "/{eventId}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String postWebhooksReceive(@PathVariable("eventId") String eventId,
                                       @RequestBody(required = false) String requestBody,
                                       HttpServletRequest httpServletRequest) {
 
-        callBackRecordService.recordWebhooks(uuid, httpServletRequest, requestBody);
+        webHooksRecordService.recordWebhooks(eventId, httpServletRequest, requestBody);
 
         return "success";
 

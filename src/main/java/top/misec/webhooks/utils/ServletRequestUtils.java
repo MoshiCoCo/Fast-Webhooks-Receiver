@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ServletRequestUtils {
 
+    /**
+     * 获取请求头
+     *
+     * @param request request
+     * @return map
+     */
     public static Map<String, String> getHeaders(HttpServletRequest request) {
         Map<String, String> headerMap = new HashMap<>(16);
         Enumeration<String> enumeration = request.getHeaderNames();
@@ -20,5 +26,22 @@ public class ServletRequestUtils {
             headerMap.put(name, value);
         }
         return headerMap;
+    }
+
+    /**
+     * 获取请求参数
+     *
+     * @param request request
+     * @return map
+     */
+    private static Map<String, String> getParameters(HttpServletRequest request) {
+        Map<String, String> parameterMap = new HashMap<>(16);
+        Enumeration<String> enumeration = request.getParameterNames();
+        while (enumeration.hasMoreElements()) {
+            String name = enumeration.nextElement();
+            String value = request.getParameter(name);
+            parameterMap.put(name, value);
+        }
+        return parameterMap;
     }
 }
