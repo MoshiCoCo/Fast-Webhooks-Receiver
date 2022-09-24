@@ -20,7 +20,7 @@ import top.misec.webhooks.service.IWebHooksRecordService;
  * @author moshi
  * @since 2022-09-23
  */
-@RequestMapping("/webHooks")
+@RequestMapping("/webhooks")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
